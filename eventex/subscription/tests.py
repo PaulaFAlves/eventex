@@ -73,6 +73,7 @@ class SubscribePostTest(TestCase):
 		self.assertIn('henrique@bastos.net', email.body)
 		self.assertIn('21-2323-2323', email.body)
 
+
 class SubscribeInvalidPost(TestCase):
 	def setUp(self):
 		self.resp = self.client.post('/inscricao/', {})
