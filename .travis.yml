@@ -2,7 +2,7 @@ language: python
 python:
   - "3.7.4"
 before_install:
-  - pip install --user codecov
+  - pip install codecov
 install:
   - cp contrib/env-sample .env
   - pip install -q -r requirements.txt
