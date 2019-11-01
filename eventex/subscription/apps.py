@@ -2,4 +2,5 @@ from django.apps import AppConfig
 
 
 class SubscriptionConfig(AppConfig):
-    name = 'subscription'
+    name = 'eventex.subscription'
+    verbose_name = 'Controle de Participantes'
