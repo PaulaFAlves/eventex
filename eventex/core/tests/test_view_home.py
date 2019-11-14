@@ -1,9 +1,10 @@
 from django.test import TestCase
+from django.shortcuts import resolve_url as r
 
 
 class HomeTest(TestCase): # TestCase já vem com o django, que extende o testcase do unittest que vem com python
 	def setUp(self):
-		self.response = self.client.get('/') # / é a raiz do nosso site. client é um objeto dentro do testcase que 
+		self.response = self.client.get(r('home')) # / é a raiz do nosso site. client é um objeto dentro do testcase que 
 		# vem com o django, capaz que realizar requisições contra o próprio django, sem passar pela infra da rede.
 
 	def test_get(self):
