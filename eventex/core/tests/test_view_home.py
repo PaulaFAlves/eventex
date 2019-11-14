@@ -16,5 +16,6 @@ class HomeTest(TestCase): # TestCase já vem com o django, que extende o testcas
 		self.assertTemplateUsed(self.response, 'index.html')
 
 	def test_subscription_link(self):
-		self.assertContains(self.response, 'href="/inscricao/"')
+		expected = 'href="{}"'.format(r('subscription:new'))
+		self.assertContains(self.response, expected)
 
