@@ -5,14 +5,20 @@ from django.core import mail
 from django.template.loader import render_to_string
 from django.contrib import messages
 from django.conf import settings
+from django.shortcuts import resolve_url as r
 from eventex.subscription.models import Subscription
 
 
-def subscribe(request):
+def new(request):
 	if request.method == 'POST':
 		return create(request)
-	else:
-		return new(request)
+	
+	return empty_form(request)
+
+
+def empty_form(request):
+	return render(request, 'subscription/subscription_form.html', 
+					{'form': SubscriptionForm()})
 
 
 def create(request):
@@ -31,12 +37,10 @@ def create(request):
 				{'subscription': subscription})
 
 		
-	return HttpResponseRedirect('/inscricao/{}/'.format(subscription.pk))
+	return HttpResponseRedirect(r('subscription:detail', subscription.pk))
 	
 
-def new(request):
-	return render(request, 'subscription/subscription_form.html', 
-					{'form': SubscriptionForm()})
+
 
 def detail(request, pk):
 	try:
