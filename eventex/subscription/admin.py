@@ -9,6 +9,8 @@ class SubscriptionModelAdmin(admin.ModelAdmin):
 	search_fields = ('name', 'email', 'phone', 'cpf', 'created_at')
 	list_filter = ('created_at',)
 
+	actions = ['mark_as_paid']
+
 	def subscribed_today(self, obj):
 		return obj.created_at == now().date()
 

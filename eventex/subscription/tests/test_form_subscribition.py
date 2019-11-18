@@ -1,0 +1,37 @@
+from django.test import TestCase
+from eventex.subscription.forms import SubscriptionForm
+
+class SubscriptionFormTest(TestCase):
+	def test_form_has_field(self):
+		"""Form must have 4 fields."""
+		form = SubscriptionForm()
+		expected = ['name', 'cpf', 'email', 'phone']
+		self.assertSequenceEqual(expected, list(form.fields))
+
+	def test_cpf_is_digits(self):
+		"""CPF must only accept digits"""
+		form = self.make_validated_forms(cpf='ABCD5678901')
+		self.assertFormErrorCode(form, 'cpf', 'digits')
+
+	def test_cpf_has_11_digits(self):
+		"""CPF must have 11 digits"""
+		form = self.make_validated_forms(cpf='1234')
+		self.assertFormErrorCode(form, 'cpf', 'length')
+
+	def assertFormErrorCode(self, form, field, code):
+		errors = form.errors.as_data()
+		errors_list = errors[field]
+		exception = errors_list[0]
+		self.assertEqual(code	, exception.code)
+
+	def assertFormErrorMessage(self, form, field, msg):
+		errors = form.errors
+		errors_list = errors[field]
+		self.assertListEqual([msg], errors_list)
+
+	def make_validated_forms(self, **kwargs):
+		valid = dict(name='Henrique Bastos', cpf='12345678901', email='henrique@bastos.net', phone='21-9999999999')
+		data = dict(valid, **kwargs)
+		form = SubscriptionForm(data)
+		form.is_valid()
+		return form
